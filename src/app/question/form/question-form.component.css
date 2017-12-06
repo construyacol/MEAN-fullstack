@@ -1,0 +1,18 @@
+i, .icon{
+  font-size: 50px;
+}
+
+mat-grid-tile{
+  display: flex;
+  flex-direction: column;
+}
+
+small{
+  display: block;
+}
+.bf{
+  position: fixed;
+  width: 100%;
+    bottom: 0;
+    left: 0;
+}
