@@ -5,6 +5,8 @@ import { User } from "../auth/user.model";
 import { Question } from "../question/question.model";
 import { QuestionService } from "../question/question.service";
 import SweetScroll from 'sweet-scroll';
+import {AuthService} from '../auth/auth.service';
+import { Router } from '@angular/router';
 
 // import { Answer } from "./answer.model";
 
@@ -20,12 +22,19 @@ export class AnswerFormComponent {
 	@Input() question: Question;
 	sweetScroll: SweetScroll;
 
-	constructor(private questionService: QuestionService){
+	constructor(
+		private authService: AuthService,
+		private router: Router,
+		private questionService: QuestionService){
 		//Utilizamos la librería sweetScroll para navegar hacia un id dentro de nuestra pantalla
 		this.sweetScroll = new SweetScroll();
 	}
 
 	onSubmit(form: NgForm){
+
+		if(!this.authService.isLoggedIn()){
+			this.router.navigateByUrl('/signin')
+		}
 
 		const answ = new Answer(
 			form.value.description,
@@ -37,7 +46,7 @@ export class AnswerFormComponent {
 						this.question.answers.unshift(a);
 						this.sweetScroll.to('#title');
 					},
-					error => console.log(error)
+					error => this.authService.handleError(error)
 				);
 
 		form.reset();

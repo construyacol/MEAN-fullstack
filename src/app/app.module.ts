@@ -20,7 +20,7 @@ import { signupScreenComponent } from "./auth/signup/signup-screen.component";
 
 import { Routing } from './app.routing';
 
-
+import { AuthService } from './auth/auth.service';
 
 
 import { MomentModule } from "angular2-moment";
@@ -45,7 +45,7 @@ import { MomentModule } from "angular2-moment";
     Routing,
     HttpModule
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 

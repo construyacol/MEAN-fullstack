@@ -1,19 +1,19 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { User } from "../user.model";
-import { QuestionService } from '../../question/question.service';
+//El servicio de signin lo importamos en el providers de app.module para declararlo de manera global en la aplicación y hacerlo accesible desde cualquier componente
+import { AuthService } from '../auth.service';
 
 @Component({
 	selector: "app-signin-screen",
 	templateUrl: "./signin-screen.component.html",
-    styleUrls: ["./signin-screen.component.css"],
-		providers: [QuestionService]
+    styleUrls: ["./signin-screen.component.css"]
 })
 
 export class SigninScreenComponent implements OnInit {
 	signinForm: FormGroup;
 
-constructor(private questionService: QuestionService){}
+constructor(private authService: AuthService){}
 
 
 //Validamos los requerimientos de los campos de texto de la siguiente forma:
@@ -32,14 +32,12 @@ constructor(private questionService: QuestionService){}
 			const {email, password} = this.signinForm.value;
 			const user = new User(email, password, null, null);
 
-			this.questionService.signinUser(user)
+			this.authService.signinUser(user)
 				.subscribe(
-					//metodo que se ejecuta si todo sale bien - Obtenemos la propiedad _id del objeto json que obtenemos como parametro en el metodo de respuesta map(resul:Response) en addQuestion() ../question.service
-					(a)=> console.log(a),
+					this.authService.login,
 					error => console.log(error)
 				);
 
-			// console.log(user);
 		}
 	}
 }

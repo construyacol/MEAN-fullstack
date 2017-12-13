@@ -1,6 +1,27 @@
 <div class="menu"> <span [routerLink]="['/']">PlatziOverflow </span>
-  <i class="material-icons" [routerLink]="['/signin']"> account_circle</i>
+
+<button *ngIf="!isLoggedIn()" [routerLink]="['/signin']"  mat-icon-button>
+<i class="material-icons"> account_circle</i>
+</button>
+
+
+<div *ngIf="isLoggedIn()">
+
+<button mat-icon-button [matMenuTriggerFor]="menu">
+  <mat-icon>account_circle</mat-icon>
+</button>
+<mat-menu #menu="matMenu">
+  <button mat-menu-item disabled>
+    {{ fullName() }}
+  </button>
+  <button mat-menu-item (click)="logout()">
+    Cerrar Session
+  </button>
+</mat-menu>
+
 </div>
+</div>
+
 
 <router-outlet></router-outlet>
 

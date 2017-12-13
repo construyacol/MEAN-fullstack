@@ -4,6 +4,8 @@ import { Question } from "../question.model";
 import icons from "../icons";
 import { QuestionService } from '../question.service';
 import { Router } from '@angular/router';
+import {AuthService} from '../../auth/auth.service';
+
 
 @Component({
 	selector:"app-question-form",
@@ -17,7 +19,8 @@ export class QuestionFormComponent{
 
 	constructor(
 		private questionService: QuestionService,
-		private router: Router
+		private router: Router,
+		private authService: AuthService
 	 ){}
 
 	getIconVersion(icon: any){
@@ -31,6 +34,9 @@ export class QuestionFormComponent{
 	}
 
 	onSubmit(form: NgForm){
+		if(!this.authService.isLoggedIn()){
+			this.router.navigateByUrl('/signin')
+		}
 
 		const q = new Question(
 			form.value.title,

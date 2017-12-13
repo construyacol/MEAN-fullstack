@@ -4,7 +4,9 @@ import {
 	MatCheckboxModule,
 	MatGridListModule,
 	MatRadioModule,
-	MatProgressSpinnerModule
+	MatProgressSpinnerModule,
+	MatMenuModule,
+	MatSnackBarModule
 } from "@angular/material";
 
 import {NoopAnimationsModule} from "@angular/platform-browser/animations";
@@ -13,7 +15,7 @@ import {MatInputModule} from "@angular/material/input";
 import {MatListModule} from "@angular/material/list";
 import {MatIconModule} from "@angular/material/icon";
 
-const modules = [MatProgressSpinnerModule, MatRadioModule, MatGridListModule, MatIconModule, MatListModule, MatInputModule, NoopAnimationsModule, MatCardModule, MatButtonModule, MatCheckboxModule];
+const modules = [MatSnackBarModule, MatMenuModule, MatProgressSpinnerModule, MatRadioModule, MatGridListModule, MatIconModule, MatListModule, MatInputModule, NoopAnimationsModule, MatCardModule, MatButtonModule, MatCheckboxModule];
 
 @NgModule({
 	imports: modules,

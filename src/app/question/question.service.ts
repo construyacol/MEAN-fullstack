@@ -23,6 +23,11 @@ export class QuestionService {
 
   }
 
+  getToken(){
+    const token = localStorage.getItem('token');
+    return `?token=${token}`;
+  }
+
   getQuestions(): Promise<void | Question[]>{
     return this.http.get(this.questionsUrl)
                 .toPromise()
@@ -41,10 +46,12 @@ export class QuestionService {
   addQuestion(question: Question){
     const body = JSON.stringify(question);
     const headers = new Headers({ 'Content-Type': 'application/json' });
+    // const url = this.questionsUrl;
+    const token = this.getToken();
     const options = new RequestOptions({ headers : headers, method: 'post'});
     // console.log(question);
 
-    return this.http.post(this.questionsUrl, body, options)
+    return this.http.post(this.questionsUrl + token, body, options)
         .map((resul:Response) =>{
            const data = resul.json();
            return data;
@@ -65,40 +72,18 @@ export class QuestionService {
     // const body = answer;
     const headers = new Headers({ 'Content-Type': 'application/json' });
     const options = new RequestOptions({ headers : headers, method: 'post'});
-    // console.log(question);
-    // console.log(a.question._id);
-    const url = urljoin(this.questionsUrl, answer.question._id, 'a');
+    const token = this.getToken();
+
+    const url = urljoin(this.questionsUrl, answer.question._id, 'answer');
     // console.log(url);
 
-    return this.http.post(url, body, {headers:headers})
+    return this.http.post(url + token, body, {headers:headers})
         .map((resul:Response) =>{
            const data = resul.json();
            return data;
          })
         .catch((error: Response) => Observable.throw(error.json()));
   }
-
-
-  //POST api/questions/signin
- signinUser(user: User){
-
-  const body = JSON.stringify(user);
-
-  const headers = new Headers({ 'Content-Type': 'application/json' });
-  const options = new RequestOptions({ headers : headers, method: 'post'});
-
-  const url = urljoin(this.questionsUrl,'signin');
-
-  return this.http.post(url, body, {headers:headers})
-  .map((resul:Response) =>{
-     const data = resul.json();
-     return data;
-   })
-  .catch((error: Response) => Observable.throw(error.json()));
-
-
-
-}
 
 
 
